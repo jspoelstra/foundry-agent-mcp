@@ -1,0 +1,90 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "foundry-agent-mcp"
+version = "0.1.0"
+description = "Demo Azure AI MCP agent project"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Jacob Spoelstra", email = "jacob@spoelstra.us" }
+]
+keywords = ["azure", "ai", "agents", "mcp", "demo"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers"
+]
+
+# Core runtime dependencies needed by demo and scripts
+# NOTE: Versions use conservative minimums; adjust to known-good versions for your environment.
+dependencies = [
+  "azure-ai-projects>=1.0.0b1",  # Provides AIProjectClient
+  "azure-ai-agents>=1.0.0b1",    # Provides agent + MCP models (McpTool, ToolApproval, etc.)
+  "azure-identity>=1.17.0",      # DefaultAzureCredential
+  "python-dotenv>=1.0.1"         # Load .env automatically
+]
+
+[project.optional-dependencies]
+# Install with: pip install .[dev]
+dev = [
+  "pytest>=8.2",
+  "pytest-asyncio>=0.23",
+  "mypy>=1.10",
+  "ruff>=0.5.0",
+  "types-requests",  # if HTTP calls are added later
+  "bandit>=1.7.9",
+  "coverage>=7.5"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E", "F", "I", "UP", "B", "SIM", "PL", "ARG", "RUF"]
+ignore = [
+  "E203", # Compatible with Black slicing
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+strict_optional = true
+no_implicit_optional = true
+disallow_any_generics = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+strict_equality = true
+show_error_codes = true
+pretty = true
+
+[tool.pytest.ini_options]
+addopts = "-ra -q --strict-markers --strict-config"
+python_files = ["test_*.py", "*_test.py"]
+
+[tool.coverage.run]
+branch = true
+source = ["."]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.bandit]
+skips = ["B101"]  # assert usage allowed for internal invariants
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
