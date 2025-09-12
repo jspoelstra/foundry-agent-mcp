@@ -3,7 +3,7 @@
 Demo Azure AI MCP (Model Context Protocol) agent project that demonstrates interacting with an MCP server via Azure AI Agents SDK using `McpTool` capabilities.
 
 ## Overview
-This project shows how to:
+This project is a refactor of code example documented [here](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/model-context-protocol-samples?pivots=python) and shows how to:
 - Configure and register an MCP server as a tool with an Azure AI Agent
 - Create an agent, thread, message, and run lifecycle
 - Handle tool approval workflows (manual approval pattern)
